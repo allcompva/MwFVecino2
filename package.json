@@ -1,0 +1,57 @@
+{
+  "name": "beinfinitus",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve ",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dev": "vue-cli-service serve --port 8000 --public http://be.niufleex.com:8000"
+  },
+  "dependencies": {
+    "@auth0/auth0-spa-js": "^1.20.0",
+    "@vimeo/player": "^2.16.3",
+    "axios": "^0.26.0",
+    "core-js": "^3.6.5",
+    "vue": "2.6",
+    "vue-i18n": "^9.1.9",
+    "vue-router": "^3.5.3",
+    "vuedraggable": "^2.24.3",
+    "vuetify": "^2.6.5",
+    "vuex": "2.0.0",
+    "yarn": "^1.22.18"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^5.0.4",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-vuex": "^5.0.4",
+    "@vue/cli-service": "^5.0.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.15.0",
+    "eslint-plugin-vue": "^8.7.1",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.5",
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.7.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

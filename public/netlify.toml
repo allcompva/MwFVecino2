@@ -1,0 +1,49 @@
+[[redirects]]
+from = "/FichaCurso/:guid"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "/Live"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "/BannerEdit"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "/login"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "/play/:guid"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "/session/:guid"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "/grabaciones"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "/envivo"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "/"
+to = "/index.html"
+status = 202
+
+[[redirects]]
+from = "*"
+to = "/index.html"
+status = 202
