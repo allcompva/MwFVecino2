@@ -1,8 +1,11 @@
 <template>
   <v-form class="row needs-validation" v-if="datosCompletos != null">
-    <v-row v-for="(itemRow, i) in filasUnicas" :key="i" style="padding-top: 0">
+    <v-row
+      v-for="(itemRow, i) in filasUnicas"
+      :key="i"
+      style="padding-top: 0; padding-bottom: 0"
+    >
       <v-col
-        style="margin-bottom: 35px"
         xs="12"
         :lg="itemCol.col"
         :xl="itemCol.col"
@@ -41,15 +44,18 @@
               margin-top: 0px;
               font-size: 18px;
               font-weight: 500;
+              padding: 0;
               color: var(--roofsie-gray);
             "
             >{{ itemCol.objFormulario.nombre }}</v-card-title
           >
           <hr style="margin-bottom: 0px" />
           <v-card-text
+            style="padding-left: 0; padding-right: 0"
             v-if="datosCompletos != null && datosCompletos != 'undefined'"
           >
             <v-row
+              style="padding-top: 0px; padding-bottom: 0; margin-top: 0"
               v-for="(campo, c) in itemCol.objFormulario.lstCampos.filter(
                 (filas, index, self) =>
                   index === self.findIndex((f) => f.row === filas.row)
@@ -57,6 +63,7 @@
               :key="c"
             >
               <v-col
+                style="padding: 0"
                 xs="12"
                 :lg="itemColF.col"
                 :xl="itemColF.col"
@@ -197,7 +204,7 @@
                   style="margin-top: 10px"
                   v-if="itemColF.id_tipo_campo == 9"
                 >
-                  <label>{{
+                  <label style="margin-bottom: 5px;">{{
                     itemColF.etiqueta[0].toUpperCase() +
                     itemColF.etiqueta.substring(1).toLowerCase()
                   }}</label>
@@ -206,6 +213,7 @@
                     track-by="value"
                     :multiple="true"
                     :close-on-select="true"
+                    :items="itemColF.contenido_campo"
                     v-model="itemColF.ingreso_usuario"
                     :id="itemColF.nombre"
                     class="form-comtrol"
@@ -375,27 +383,27 @@
       </v-col>
     </v-row>
 
-    <v-row>
+    <v-row style="margin-top: 0; padding-top: 0">
       <v-col cols="12">
         <v-alert v-if="error" elevation="7" shaped color="danger">{{
           this.textoError
         }}</v-alert>
 
-        <button
-          @click="btnSiguiente_clickHijo(paso, 0)"
+        <v-btn
+          @click="btnSigPrueba(paso, 0)"
           class="btn btn-primary shadow-md me-2"
           style="float: left"
         >
           <i class="pi pi-arrow-left"></i><span>&nbsp;&nbsp;Anterior</span>
-        </button>
-        <button
-          type="submit"
-          @click="btnSiguiente_clickHijo(paso, 1)"
+        </v-btn>
+        <v-btn
+          type="button"
+          @click="btnSigPrueba(paso, 1)"
           class="btn btn-primary shadow-md me-2"
           style="float: right"
         >
           <span>Siguiente</span>&nbsp;&nbsp;<i class="pi pi-arrow-right"></i>
-        </button>
+        </v-btn>
       </v-col>
     </v-row>
     <!--<CModal
@@ -516,7 +524,6 @@ export default {
       (filas, index, self) =>
         index === self.findIndex((f) => f.row === filas.row)
     );
-    alert(JSON.stringify(this.datosCompletos))
     //const store = useStore()
     // alert(store.cuit)
   },
@@ -532,6 +539,9 @@ export default {
     },
   },
   methods: {
+    btnSigPrueba(pasoDestino, direccion) {
+      this.$emit("tengo_resultados", pasoDestino, direccion);
+    },
     iniciaEliminar(indexCol) {
       this.indice_imagen = indexCol;
       this.modalQuitarImage = true;

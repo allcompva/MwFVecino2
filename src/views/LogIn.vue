@@ -57,7 +57,7 @@
     setup() {},
     components: {},
     mounted() {
-        if (this.$storage.getTextOrInt("cuit") != null) {
+        if (this.$storage.getTextOrInt("cuit") != null && this.$storage.getTextOrInt("hash") != null) {
             this.$router.push("/ListaTramites/" + this.$storage.getTextOrInt("hash"));
         }
     },

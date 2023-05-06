@@ -117,8 +117,7 @@
                   >
                     <template>
                       <Formulario
-                        :formulario="
-                          item.lstContenido"
+                        :formulario="item.lstContenido"
                         :paso="index + 2"
                         v-on:tengo_resultados="onResultados"
                       ></Formulario>
@@ -399,7 +398,11 @@ export default {
       console.log("Wizard Completed");
     },
     onResultados(datos, direccion) {
-      var sig = 0;
+      if (direccion == 1) {
+        this.e1 = datos + 1;
+      }
+
+      /*var sig = 0;
       var actual = document.getElementById("step-" + datos);
       var siguiente = "";
       if (direccion == 0) {
@@ -416,16 +419,7 @@ export default {
       }
       this.titu = this.pasos[sig].title;
       siguiente.classList.add("fw-step-active");
-      //for (var i = 0; i < datos; i++) {
-      //var elem1 = document.getElementById('step-1')
-      //if (i == 0) {
-
-      //}
-      //if (i == 1) {
-
-      //}
-      //}
-      this.currentTabIndex = sig;
+      this.currentTabIndex = sig;*/
     },
   },
 };
