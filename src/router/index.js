@@ -22,6 +22,14 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/VistaTramite.vue"),
   },  
+  {
+    path: '/Tramite/:id',
+    name: 'Tramite',
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ '@/views/Tramite.vue'),
+
+    params: true,
+  },
 ];
 
 const router = new VueRouter({
