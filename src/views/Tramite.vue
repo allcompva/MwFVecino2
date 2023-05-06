@@ -2,7 +2,12 @@
   <div>
     <div
       class="container"
-      style="padding-top: 20px; z-index: 0; position: relative"
+      style="
+        padding-top: 20px;
+        z-index: 0;
+        position: relative;
+        margin-top: -40px;
+      "
       v-if="this.paso != null && this.paso != 'undefined'"
     >
       <v-card>
@@ -34,129 +39,102 @@
           <div class="col-xs-12" v-if="pasos != null && pasos != 'undefined'">
             <v-stepper v-model="e1">
               <v-stepper-header>
-                <v-stepper-step :complete="e1 > 1" step="1">
-                  Name of step 1
-                </v-stepper-step>
-
-                <v-divider></v-divider>
-
-                <v-stepper-step :complete="e1 > 2" step="2">
-                  Name of step 2
-                </v-stepper-step>
-
-                <v-divider></v-divider>
-
-                <v-stepper-step step="3"> Name of step 3 </v-stepper-step>
+                <template v-for="pas in pasos">
+                  <v-stepper-step :complete="e1 > pas.id" :step="pas.id">
+                    {{ pas.title }}
+                  </v-stepper-step>
+                  <v-divider v-if="pasos.length < pas.id"></v-divider>
+                </template>
               </v-stepper-header>
 
               <v-stepper-items>
                 <v-stepper-content step="1">
                   <v-card
                     class="mb-12"
-                    color="grey lighten-1"
-                    height="200px"
-                  ></v-card>
-
-                  <v-btn color="primary" @click="e1 = 2"> Continue </v-btn>
-
-                  <v-btn text> Cancel </v-btn>
+                    color="white"
+                    style="box-shadow: none !important"
+                  >
+                    <template>
+                      <v-row style="padding-bottom: 0">
+                        <v-col cols="12" lg="5" xl="5">
+                          <label style="margin-bottom: 5px"
+                            >Apellido y Nombre</label
+                          >
+                          <v-text-field
+                            v-model="NombreFormateado"
+                            label="Nombre"
+                            readonly
+                            solo
+                            dense
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" lg="3" xl="3">
+                          <label style="margin-bottom: 5px">CUIT</label>
+                          <v-text-field
+                            v-model="cuit"
+                            label="CUIT"
+                            readonly
+                            solo
+                            dense
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-row style="margin-top: 0; padding-top: 0">
+                        <v-col xs="12" sm="12" md="12" lg="8" xl="8">
+                          <label style="margin-bottom: 5px"
+                            >Representando a</label
+                          >
+                          <v-select
+                            v-model="representado"
+                            :items="items"
+                            label="Representado"
+                            solo
+                          ></v-select>
+                          <v-btn
+                            style="
+                              background-color: #0f99ca;
+                              border-color: #0f99ca;
+                              color: white;
+                            "
+                            @click="cambiartabs(e1, 1)"
+                          >
+                            Siguiente
+                          </v-btn>
+                        </v-col>
+                      </v-row>
+                    </template>
+                  </v-card>
                 </v-stepper-content>
-
-                <v-stepper-content step="2">
+                <v-stepper-content
+                  :step="index + 2"
+                  v-for="(item, index) in this.paso.lstIngresos"
+                  :key="index"
+                >
                   <v-card
                     class="mb-12"
-                    color="grey lighten-1"
-                    height="200px"
-                  ></v-card>
+                    color="white"
+                    style="box-shadow: none !important"
+                  >
+                    <template v-if="currentTabIndex === index + 1">
+                      <Formulario
+                        :formulario="
+                          item.lstContenido.filter(
+                            (r) => r.id_ingerso_paso == item.id_ingerso_paso
+                          )
+                        "
+                        :paso="index + 1"
+                        v-on:tengo_resultados="onResultados"
+                      ></Formulario>
+                    </template>
+                  </v-card>
 
                   <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
 
                   <v-btn text> Cancel </v-btn>
                 </v-stepper-content>
-
-                <v-stepper-content step="3">
-                  <v-card
-                    class="mb-12"
-                    color="grey lighten-1"
-                    height="200px"
-                  ></v-card>
-
-                  <v-btn color="primary" @click="e1 = 1"> Continue </v-btn>
-
-                  <v-btn text> Cancel </v-btn>
-                </v-stepper-content>
               </v-stepper-items>
             </v-stepper>
-            <template>
-              <v-row>
-                <v-col cols="12">
-                  <v-card-title
-                    style="
-                      margin-bottom: 10px;
-                      margin-top: 0px;
-                      font-size: 18px;
-                      font-weight: 500;
-                      color: var(--roofsie-gray);
-                    "
-                    >Iniciador</v-card-title
-                  >
-                  <hr />
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col xs="12" sm="12" md="12" lg="5" xl="5">
-                  <v-text-field
-                    v-model="NombreFormateado"
-                    value="NombreFormateado"
-                    label="Nombre"
-                    readonly
-                  ></v-text-field>
-                </v-col>
-                <v-col xs="12" sm="12" md="12" lg="3" xl="3">
-                  <v-text-field
-                    v-model="cuit"
-                    value="cuit"
-                    label="CUIT"
-                    readonly
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col xs="12" sm="12" md="12" lg="8" xl="8">
-                  <v-select
-                    v-model="representado"
-                    :items="items"
-                    label="Representado"
-                    solo
-                  ></v-select>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col xs="12" style="margin-top: 35px"
-                  ><button
-                    class="btn btn-primary shadow-md me-2"
-                    style="float: right"
-                    @click="onResultados(0)"
-                  >
-                    <span>Siguiente</span>&nbsp;&nbsp;<i
-                      class="pi pi-arrow-right"
-                    ></i></button
-                ></v-col>
-              </v-row>
-            </template>
-            <template v-for="(item, index) in this.paso.lstIngresos">
-              <template v-if="currentTabIndex === index + 1">
-                <Formulario
-                  :formulario="
-                    item.lstContenido.filter(
-                      (r) => r.id_ingerso_paso == item.id_ingerso_paso
-                    )
-                  "
-                  :paso="currentTabIndex"
-                  v-on:tengo_resultados="onResultados"
-                ></Formulario>
-              </template>
-            </template>
+
             <div v-if="currentTabIndex === this.paso.lstIngresos.length + 1">
               <Resumen
                 :iniciador="NombreFormateado"
@@ -279,7 +257,7 @@
   );
 }
 .form-wizard-vue .fw-step-checked {
-  border: 2px solid #4a97c8;
+  border: 2px solid #4a97c8 !important;
 }
 .border-top-warning {
   border-top-color: #3798c9 !important;
@@ -309,12 +287,12 @@
 }
 
 .theme--light.v-stepper .v-stepper__step__step {
-  background-color: #3798c9;
+  background-color: #3798c9 !important;
 }
 
 .theme--light.v-stepper .v-stepper__step__step .v-icon {
   color: white;
-  background-color: #3798c9;
+  background-color: #3798c9 !important;
   font-weight: bolder;
   border-radius: 50%;
   height: 36px;
@@ -331,7 +309,7 @@
 }
 </style>
 <script>
-//import Formulario from "../components/Formularios.vue";
+import Formulario from "../components/Formularios.vue";
 //import Resumen from "../components/Resumen.vue";
 
 export default {
@@ -366,20 +344,23 @@ export default {
   }),
   components: {
     //Header,
-    //Formulario,
+    Formulario,
     //Wizard,
     //Resumen,
   },
   async mounted() {
     try {
       if (this.$storage.getTextOrInt("cuit") != null) {
+        this.NombreFormateado = this.$storage.getTextOrInt("nombreformateado");
+        this.cuit = this.$storage.getTextOrInt("cuitformateado");
+        this.cuil = this.$storage.getTextOrInt("cuit");
         this.paso = (
           await this.$http.get("/Paso/getByPk?ID=" + this.$route.params.id)
         ).data;
 
-        let titulosPaso = { id: 0, title: "Iniciador" };
+        let titulosPaso = { id: 1, title: "Iniciador" };
         this.pasos.push(titulosPaso);
-        var i = 1;
+        var i = 2;
         this.paso.lstIngresos.forEach((element) => {
           titulosPaso = { id: i, title: element.titulo };
           this.pasos.push(titulosPaso);
@@ -387,8 +368,8 @@ export default {
         });
         titulosPaso = { id: i, title: "Confirmación" };
         this.pasos.push(titulosPaso);
-        this.$store.commit("setIdTramite", this.paso.id_tramite);
-        this.$store.commit("setIdPaso", this.paso.id);
+        //this.$store.commit("setIdTramite", this.paso.id_tramite);
+        //this.$store.commit("setIdPaso", this.paso.id);
         this.titu = this.pasos[0].title();
       }
     } catch (error) {
@@ -404,6 +385,12 @@ export default {
     },
   },
   methods: {
+    cambiartabs(actual, direccion) {
+      if (direccion == 1) {
+        this.currentTabIndex = actual + 1;
+        this.e1 = this.e1 + 1;
+      }
+    },
     validadeFormOne() {
       return false;
     },

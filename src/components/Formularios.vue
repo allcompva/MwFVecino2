@@ -495,7 +495,7 @@
 </template>
 <script>
 export default {
-  components: { VueMultiselect, CIcon },
+  components: {},
   data: () => ({
     modalQuitarImage: false,
     images: [],
@@ -534,6 +534,7 @@ export default {
       (filas, index, self) =>
         index === self.findIndex((f) => f.row === filas.row)
     );
+    alert(this.filasUnicas.length)
     //const store = useStore()
     // alert(store.cuit)
   },
@@ -711,4 +712,4 @@ export default {
   },
 };
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
+
