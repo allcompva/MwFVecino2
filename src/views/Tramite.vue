@@ -115,22 +115,15 @@
                     color="white"
                     style="box-shadow: none !important"
                   >
-                    <template v-if="currentTabIndex === index + 1">
+                    <template>
                       <Formulario
                         :formulario="
-                          item.lstContenido.filter(
-                            (r) => r.id_ingerso_paso == item.id_ingerso_paso
-                          )
-                        "
-                        :paso="index + 1"
+                          item.lstContenido"
+                        :paso="index + 2"
                         v-on:tengo_resultados="onResultados"
                       ></Formulario>
                     </template>
                   </v-card>
-
-                  <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
-
-                  <v-btn text> Cancel </v-btn>
                 </v-stepper-content>
               </v-stepper-items>
             </v-stepper>

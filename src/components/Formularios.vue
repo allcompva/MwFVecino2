@@ -191,24 +191,7 @@
                   <select
                     v-model="itemColF.ingreso_usuario"
                     class="form-control"
-                    @change="
-                      CambiaValor(
-                        $event,
-                        JSON.parse(
-                          itemCol.objFormulario.lstCampos[ico + 1]
-                            .contenido_campo
-                        )
-                      )
-                    "
-                  >
-                    <option
-                      v-for="opciones in JSON.parse(itemColF.contenido_campo)"
-                      :key="opciones.value"
-                      :value="opciones.value + ',' + opciones.text"
-                    >
-                      {{ opciones.text }}
-                    </option>
-                  </select>
+                  ></select>
                 </div>
                 <div
                   style="margin-top: 10px"
@@ -225,7 +208,6 @@
                     :close-on-select="true"
                     v-model="itemColF.ingreso_usuario"
                     :id="itemColF.nombre"
-                    :options="JSON.parse(itemColF.contenido_campo)"
                     class="form-comtrol"
                     chips
                     multiple
@@ -339,34 +321,34 @@
             </template>
             <template v-else>
               <label style="margin-top: 25px">Subir Archivos</label>
-              <CFormInput
-                type="file"
+              <v-file-input
                 :accept="itemCol.objAdjunto.extenciones_aceptadas"
+                label="File input"
                 :id="itemCol.objAdjunto.nombre"
                 @change="handleImage($event, i + ic)"
-              />
+              ></v-file-input>
             </template>
           </template>
           <template v-else>
             <label style="margin-top: 25px">Subir Archivos</label>
-            <CFormInput
-              type="file"
-              multiple
+            <v-file-input
               :accept="itemCol.objAdjunto.extenciones_aceptadas"
               :id="itemCol.objAdjunto.nombre"
               @change="handleImageMultipla($event)"
-            />
+              multiple
+              label="File input"
+            ></v-file-input>
             <v-alert
               v-for="(image, index) in images"
               :key="index"
               style="display: inline-flex; margin-right: 5px"
             >
-              <CButton
+              <v-btn
                 @click="iniciaEliminar(index)"
                 style="right: 0; position: absolute; box-shadow: none"
               >
-                <CIcon
-                  :icon="icon.cilX"
+                <span
+                  class="fa fa-delete"
                   size="xl"
                   style="
                     border: solid;
@@ -375,8 +357,8 @@
                     background: red;
                     color: white;
                   "
-                />
-              </CButton>
+                ></span>
+              </v-btn>
               <img
                 :src="image"
                 style="
@@ -394,10 +376,10 @@
     </v-row>
 
     <v-row>
-      <CCol xs="12">
-        <CAlert v-if="error" elevation="7" shaped color="danger">{{
+      <v-col cols="12">
+        <v-alert v-if="error" elevation="7" shaped color="danger">{{
           this.textoError
-        }}</CAlert>
+        }}</v-alert>
 
         <button
           @click="btnSiguiente_clickHijo(paso, 0)"
@@ -414,9 +396,9 @@
         >
           <span>Siguiente</span>&nbsp;&nbsp;<i class="pi pi-arrow-right"></i>
         </button>
-      </CCol>
+      </v-col>
     </v-row>
-    <CModal
+    <!--<CModal
       style="margin-top: 150px !important"
       :visible="visibleLiveDemo"
       @close="
@@ -490,9 +472,10 @@
           >Aceptar</CButton
         >
       </CModalBody>
-    </CModal>
+    </CModal>-->
   </v-form>
 </template>
+
 <script>
 export default {
   components: {},
@@ -500,7 +483,6 @@ export default {
     modalQuitarImage: false,
     images: [],
     visibleLiveDemo: false,
-    icon,
     maxValue: 0,
     text: "",
     value: "",
@@ -534,7 +516,7 @@ export default {
       (filas, index, self) =>
         index === self.findIndex((f) => f.row === filas.row)
     );
-    alert(this.filasUnicas.length)
+    alert(JSON.stringify(this.datosCompletos))
     //const store = useStore()
     // alert(store.cuit)
   },
@@ -712,4 +694,3 @@ export default {
   },
 };
 </script>
-
